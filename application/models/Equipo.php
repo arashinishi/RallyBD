@@ -22,7 +22,7 @@ class Equipo extends CI_Model{
 
     //¿Modificar/Eliminar competidor de un equipo/ cambiarlo de equipo?
 
-    public function ObtenerCompetidoresEquipo(){} //3 join creo :D
+    public function ObtenerCompetidoresEquipo(){}
     public function ObtenerPilotosEquipo(){}
     public function ObtenerCopilotosEquipo(){}
     public function ObtenerAutomoviles(){}

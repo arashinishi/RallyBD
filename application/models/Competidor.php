@@ -3,6 +3,7 @@
 class Competidor extends CI_Model{
     //Desde su creación se determina su equipo
     public function CrearPiloto($rut, $nacionalidad, $nombres, $apPaterno, $apMaterno, $nombreEquipo){
+
         $data = array(
             'rut' => $rut,
             'nacionalidad' => $nacionalidad,
@@ -17,6 +18,7 @@ class Competidor extends CI_Model{
 
     }
     public function CrearCopiloto($rut, $nacionalidad, $nombres, $apPaterno, $apMaterno, $nombreEquipo){
+        /*$query = $this->db->query('INSERT INTO competidor VALUES ('.$rut.','.$nacionalidad.','.$nombres.','.$apPaterno.','')');
         $data = array(
             'rut' => $rut,
             'nacionalidad' => $nacionalidad,
@@ -26,38 +28,25 @@ class Competidor extends CI_Model{
             'nombreEquipo' => $nombreEquipo
         );
         $this->db->insert('competidor', $data);
-        $this->db->insert('copiloto', array('rutCompetidor' => $rut));
+        $this->db->insert('copiloto', array('rutCompetidor' => $rut));*/
         //Actualizar cantidad de copilotos del equipo
 
     }
     public function ModificarCompetidor($rut, $nacionalidad, $nombres, $apPaterno, $apMaterno, $nombreEquipo){
-        $data = array(
-            'nacionalidad' => $nacionalidad,
-            'nombres' => $nombres,
-            'apPaterno' => $apPaterno,
-            'apMaterno' => $apMaterno,
-            'nombreEquipo' => $nombreEquipo
-        );
-        $this->db->where('rut', $rut);
-        $this->db->update('competidor', $data);
+        $sql = 'UPDATE competidor SET nacionalidad ='.$nacionalidad.', nombres ='.$nombres.', apPaterno ='.$apPaterno.', apMaterno ='.$apMaterno.', nombreEquipo ='.$nombreEquipo.' WHERE rut ='.$rut;
+        $this->db->query($sql);
     }
 
     public function ObtenerCompetidores(){
-        $query = $this->db->get('competidor');
+        $query = $this->db->query('SELECT * FROM competidor;');
         return $query->result_array();
     }
     public function ObtenerPilotos(){
-        $this->db->select('rut', 'nacionalidad', 'nombres', 'apPaterno', 'apMaterno', 'nombreEquipo');
-        $this->db->from('competidor');
-        $this->db->join('piloto', 'piloto.rutCompetidor = competidor.rut', 'inner');
-        $query = $this->db->get();
+        $query = $this->db->query('SELECT rut, nacionalidad, nombres, apPaterno, apMaterno, nombreEquipo FROM competidor INNER JOIN piloto ON rut = rutCompetidor;');
         return $query->result_array();
     }
     public function ObtenerCopilotos(){
-        $this->db->select('rut', 'nacionalidad', 'nombres', 'apPaterno', 'apMaterno', 'nombreEquipo');
-        $this->db->from('competidor');
-        $this->db->join('copiloto', 'copiloto.rutCompetidor = competidor.rut', 'inner');
-        $query = $this->db->get();
+        $query = $this->db->query('SELECT rut, nacionalidad, nombres, apPaterno, apMaterno, nombreEquipo FROM competidor INNER JOIN copiloto ON rut = rutCompetidor;');
         return $query->result_array();
     }
 }
